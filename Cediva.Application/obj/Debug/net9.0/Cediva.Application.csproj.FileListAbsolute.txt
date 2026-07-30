@@ -1,0 +1,15 @@
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\bin\Debug\net9.0\Cediva.Application.deps.json
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\bin\Debug\net9.0\Cediva.Application.dll
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\bin\Debug\net9.0\Cediva.Application.pdb
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\bin\Debug\net9.0\Cediva.Domain.dll
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\bin\Debug\net9.0\Cediva.Domain.pdb
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\obj\Debug\net9.0\Cediva.Application.csproj.AssemblyReference.cache
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\obj\Debug\net9.0\Cediva.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\obj\Debug\net9.0\Cediva.Application.AssemblyInfoInputs.cache
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\obj\Debug\net9.0\Cediva.Application.AssemblyInfo.cs
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\obj\Debug\net9.0\Cediva.Application.csproj.CoreCompileInputs.cache
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\obj\Debug\net9.0\Cediva.A.0BEEFCD7.Up2Date
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\obj\Debug\net9.0\Cediva.Application.dll
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\obj\Debug\net9.0\refint\Cediva.Application.dll
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\obj\Debug\net9.0\Cediva.Application.pdb
+C:\Users\Arturo-Vaneza\source\CEDIVA\Cediva.Application\obj\Debug\net9.0\ref\Cediva.Application.dll

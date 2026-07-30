@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cediva.Domain\Cediva.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Caracteristicas\Despachos\Consultas\ConsultarDespachos\" />
+    <Folder Include="Caracteristicas\Despachos\Consultas\ConsultarGuias\" />
+    <Folder Include="Caracteristicas\Inventarios\Consultas\ConsultarInventarios\" />
+    <Folder Include="Caracteristicas\Inventarios\Consultas\ConsultarDisponibilidad\" />
+    <Folder Include="Caracteristicas\Inventarios\Consultas\ConsultarMovimientos\" />
+    <Folder Include="Caracteristicas\Productos\Consultas\ConsultarProductos\" />
+    <Folder Include="Caracteristicas\Productos\Consultas\ConsultarProductoPorCodigo\" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
