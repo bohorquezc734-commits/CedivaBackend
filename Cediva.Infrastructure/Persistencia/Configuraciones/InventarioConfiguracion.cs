@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Cediva.Domain.Agregados.Inventario;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Cediva.Infrastructure.Persistencia.Configuraciones
 {
-    internal class InventarioConfiguracion
+    public class InventarioConfiguracion : IEntityTypeConfiguration<Inventario>
     {
+        public void Configure(EntityTypeBuilder<Inventario> builder)
+        {
+            builder.ToTable("Inventarios");
+            builder.HasKey(i => i.Id);
+        }
     }
 }
