@@ -1,20 +1,26 @@
-# Ignorar archivos compilados
-**/bin/
-**/obj/
-**/.vs/
-**/.vscode/
+# Binaries
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+*.dll
+
+# IDEs
+.vs/
+.vscode/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
 
-# Ignorar archivos de configuración sensibles
-**/appsettings.Development.json
-**/appsettings.Production.json
+# Appsettings
+appsettings.Development.json
+appsettings.Production.json
 
-# Ignorar archivos de base de datos locales
+# Databases
 *.db
 *.mdf
 *.ldf
-.vs/
+
+# Logs
 *.log
