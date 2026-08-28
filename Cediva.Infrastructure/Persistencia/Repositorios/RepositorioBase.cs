@@ -1,5 +1,4 @@
 using Cediva.Dominio.Interfaces;
-using Cediva.Infrastructure.Persistencia;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cediva.Infrastructure.Persistencia.Repositorios
@@ -33,7 +32,7 @@ namespace Cediva.Infrastructure.Persistencia.Repositorios
 
         public async Task<T?> ObtenerPorId(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _context.Set<T>().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+            return await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken);
         }
 
         public async Task<List<T>> ObtenerTodos(CancellationToken cancellationToken = default)
