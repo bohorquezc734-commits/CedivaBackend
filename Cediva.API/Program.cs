@@ -1,4 +1,5 @@
 using Cediva.Infrastructure;
+using Cediva.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddInfrastructure(builder.Configuration);
 
+// Registras tu clase de manejo de excepciones
+builder.Services.AddExceptionHandler<MiddlewareManejoExcepciones>();
+
+// Habilitas el formato ProblemDetails estándar
+builder.Services.AddProblemDetails();
+
+builder.Services.AddControllers();
+
 var app = builder.Build();
+
+app.UseHttpsRedirection();
+
+// Activas el uso del manejador de excepciones
+app.UseExceptionHandler();
+
+app.UseAuthorization();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -15,7 +32,6 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
 
 var summaries = new[]
 {
@@ -35,6 +51,8 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast");
+
+app.MapControllers();
 
 app.Run();
 

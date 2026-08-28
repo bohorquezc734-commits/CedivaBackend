@@ -1,6 +1,6 @@
-using Cediva.Domain.Agregados.Despacho;
-using Cediva.Domain.Agregados.Inventario;
 using Cediva.Dominio.Agregados.Producto;
+using Cediva.Domain.Agregados.Inventario;
+using Cediva.Domain.Agregados.Despacho;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -15,12 +15,12 @@ namespace Cediva.Infrastructure.Persistencia
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Inventario> Inventarios { get; set; }
         public DbSet<Despacho> Despachos { get; set; }
+        public DbSet<Movimiento> Movimientos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Apply configurations from the current assembly (Fluent API)
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

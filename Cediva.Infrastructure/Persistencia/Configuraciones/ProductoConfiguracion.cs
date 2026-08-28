@@ -1,49 +1,47 @@
+using Cediva.Domain.Enumeraciones;
 using Cediva.Dominio.Agregados.Producto;
+using Cediva.Dominio.ObjetosValor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Cediva.Infrastructure.Persistencia.Configuraciones
+namespace Cediva.Infrastructure.Persistencia.Configuraciones;
+
+public class ProductoConfiguracion : IEntityTypeConfiguration<Producto>
 {
-    public class ProductoConfiguracion : IEntityTypeConfiguration<Producto>
+    public void Configure(EntityTypeBuilder<Producto> builder)
     {
-        public void Configure(EntityTypeBuilder<Producto> builder)
-        {
-            builder.ToTable("Productos");
-            builder.HasKey(p => p.Id);
+        builder.ToTable("Productos");
 
-            builder.Property(p => p.Nombre)
-                .IsRequired()
-                .HasMaxLength(100);
+        builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.Descripcion)
-                .HasMaxLength(500);
+        builder.Property(p => p.Nombre)
+            .IsRequired()
+            .HasMaxLength(100);
 
-            builder.OwnsOne(p => p.CodigoBarras, cb =>
-            {
-                cb.Property(c => c.Valor)
-                  .HasColumnName("CodigoBarras")
-                  .HasMaxLength(20)
-                  .IsRequired();
-            });
+        builder.Property(p => p.Descripcion)
+            .HasMaxLength(500);
 
-            builder.Property(p => p.PrecioUnitario)
-                .HasColumnType("decimal(18,2)");
-                
-            builder.Property(p => p.UnidadMedida)
-                .IsRequired();
+        // Value Object: CodigoBarras (Single Primitive)
+        builder.Property(p => p.CodigoBarras)
+            .HasConversion(
+                codigo => codigo.Valor,
+                valor => new CodigoBarras(valor))
+            .IsRequired()
+            .HasMaxLength(50);
+            
+        builder.HasIndex(p => p.CodigoBarras).IsUnique();
 
-            builder.Property(p => p.ImagenUrl)
-                .HasMaxLength(500);
+        builder.Property(p => p.PrecioUnitario)
+            .HasPrecision(18, 2)
+            .IsRequired();
 
-            builder.HasOne(p => p.Categoria)
-                .WithMany()
-                .HasForeignKey("CategoriaId")
-                .IsRequired();
+        // Enum: UnidadMedida
+        builder.Property(p => p.UnidadMedida)
+            .HasConversion<string>()
+            .HasMaxLength(20)
+            .IsRequired();
 
-            builder.HasOne(p => p.Marca)
-                .WithMany()
-                .HasForeignKey("MarcaId")
-                .IsRequired(false);
-        }
+        builder.Property(p => p.EstaActivo).IsRequired();
+        builder.Property(p => p.FechaCreacion).IsRequired();
     }
 }
