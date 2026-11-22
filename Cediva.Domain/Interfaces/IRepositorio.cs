@@ -7,4 +7,7 @@ public interface IRepositorio<T> where T : IAggregateRoot
     Task Agregar(T entidad, CancellationToken cancellationToken = default);
     Task Actualizar(T entidad, CancellationToken cancellationToken = default);
     Task Eliminar(T entidad, CancellationToken cancellationToken = default);
+
+    Task GuardarCambios(T entidad, CancellationToken cancellationToken = default);
+
 }

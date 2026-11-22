@@ -22,7 +22,7 @@ public class Producto : IAggregateRoot
     public string? ImagenUrl { get; private set; }
     public int PuntoReorden { get; private set; }
 
-    private Producto() { } // Para EF Core
+    private Producto() { }
 
     public Producto(
         string nombre,

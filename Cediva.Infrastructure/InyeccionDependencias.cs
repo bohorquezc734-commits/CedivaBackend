@@ -16,6 +16,8 @@ namespace Cediva.Infrastructure
                 b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddScoped<IRepositorioProducto, RepositorioProducto>();
+            services.AddScoped<IRepositorioCategoria, RepositorioCategoria>();
+            services.AddScoped<IRepositorioMarca, RepositorioMarca>();
             services.AddScoped<IRepositorioInventario, RepositorioInventario>();
             services.AddScoped<IRepositorioDespacho, RepositorioDespacho>();
             

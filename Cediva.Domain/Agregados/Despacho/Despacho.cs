@@ -8,7 +8,7 @@ namespace Cediva.Domain.Agregados.Despacho
     {
         public Guid Id { get; private set; }
         public EstadoDespacho Estado { get; private set; }
-        public Direccion DireccionEntrega { get; private set; }
+        public Direccion ? DireccionEntrega { get; private set; }
         
         private readonly List<ItemDespacho> _items = new();
         public IReadOnlyCollection<ItemDespacho> Items => _items.AsReadOnly();

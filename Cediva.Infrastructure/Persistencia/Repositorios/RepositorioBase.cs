@@ -39,5 +39,15 @@ namespace Cediva.Infrastructure.Persistencia.Repositorios
         {
             return await _context.Set<T>().ToListAsync(cancellationToken);
         }
+
+        public async Task GuardarCambios(T entidad, CancellationToken cancellationToken = default)
+        {
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+
+
     }
+
+
 }

@@ -1,5 +1,6 @@
 using Cediva.Dominio.Agregados.Producto;
 using Cediva.Dominio.Interfaces;
+using Cediva.Dominio.ObjetosValor;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cediva.Infrastructure.Persistencia.Repositorios
@@ -13,7 +14,7 @@ namespace Cediva.Infrastructure.Persistencia.Repositorios
         public async Task<bool> ExisteCodigoBarras(string codigoBarras, CancellationToken cancellationToken = default)
         {
             return await _context.Productos
-                .AnyAsync(p => p.CodigoBarras.Valor == codigoBarras, cancellationToken);
+      .AnyAsync(p => p.CodigoBarras == new CodigoBarras(codigoBarras), cancellationToken);
         }
 
         public async Task<List<Producto>> ObtenerPorCategoria(Guid categoriaId, CancellationToken cancellationToken = default)

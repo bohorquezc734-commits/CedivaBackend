@@ -14,6 +14,8 @@ namespace Cediva.Infrastructure.Persistencia
         }
 
         public DbSet<Producto> Productos { get; set; } = null!;
+        public DbSet<Categoria> Categorias { get; set; } = null!;
+        public DbSet<Marca> Marcas { get; set; } = null!;
         public DbSet<Inventario> Inventarios { get; set; } = null!;
         public DbSet<Despacho> Despachos { get; set; } = null!;
         public DbSet<ItemDespacho> ItemsDespacho { get; set; } = null!;
