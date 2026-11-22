@@ -12,7 +12,7 @@ public class Marca : IAggregateRoot
     public bool EstaActivo { get; private set; }
     public DateTime FechaCreacion { get; private set; }
 
-    private Marca() { } // Para EF Core
+    private Marca() { } 
 
     public Marca(string nombre, string? descripcion = null)
     {

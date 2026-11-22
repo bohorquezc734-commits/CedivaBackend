@@ -13,7 +13,7 @@ public class Categoria : IAggregateRoot
     public bool EstaActivo { get; private set; }
     public DateTime FechaCreacion { get; private set; }
 
-    private Categoria() { } // Para EF Core
+    private Categoria() { } 
 
     public Categoria(string nombre, string? descripcion = null, Categoria? categoriaPadre = null)
     {

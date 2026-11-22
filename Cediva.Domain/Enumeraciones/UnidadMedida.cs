@@ -4,7 +4,7 @@ namespace Cediva.Domain.Enumeraciones
 {
     public enum UnidadMedida
     {
-        Usuario = 1,
+        Unidad = 1,
         Kilogramo = 2,
         Gramo = 3,
         Litro = 4,

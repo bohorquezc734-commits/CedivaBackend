@@ -1,18 +1,19 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-// Descomenta la siguiente línea y ajusta el namespace donde tengas tus excepciones de dominio
-// using Cediva.Domain.Exceptions; 
+using Cediva.Dominio.Excepciones;
+using Cediva.Domain.Excepciones;
 
 namespace Cediva.API.Middleware
 {
-    // Heredamos de IExceptionHandler, la interfaz moderna de .NET para manejar errores globales
     public class MiddlewareManejoExcepciones : IExceptionHandler
     {
         private readonly ILogger<MiddlewareManejoExcepciones> _logger;
+        private readonly IHostEnvironment _env;
 
-        public MiddlewareManejoExcepciones(ILogger<MiddlewareManejoExcepciones> logger)
+        public MiddlewareManejoExcepciones(ILogger<MiddlewareManejoExcepciones> logger, IHostEnvironment env)
         {
             _logger = logger;
+            _env = env;
         }
 
         public async ValueTask<bool> TryHandleAsync(
@@ -30,28 +31,37 @@ namespace Cediva.API.Middleware
             };
 
             // 3. Evaluamos de qué tipo es el error
-            // NOTA: Cambia "ExcepcionDominio" por el nombre exacto de la clase de error que tengas en Cediva.Domain
-            if (exception.GetType().Name == "ExcepcionDominio")
+            if (exception is ReglaDeNegocioException reglaNegocioEx)
             {
-                // Es un error de regla de negocio (Ej: Stock insuficiente)
+                // Es un error de regla de negocio específico
+                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                problemDetails.Title = "Error de Regla de Negocio";
+                problemDetails.Status = StatusCodes.Status400BadRequest;
+                problemDetails.Detail = reglaNegocioEx.Message;
+            }
+            else if (exception is ExcepcionDominio excepcionDominio)
+            {
+                // Es un error de regla de negocio de dominio existente
                 httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
                 problemDetails.Title = "Error de validación de negocio";
                 problemDetails.Status = StatusCodes.Status400BadRequest;
-                problemDetails.Detail = exception.Message;
+                problemDetails.Detail = excepcionDominio.Message;
             }
             else
             {
-                // Es un error del servidor no contemplado (Ej: Base de datos caída)
+                // Es un error inesperado (Ej: Fallo en BD, falta de configuración, etc.)
                 httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 problemDetails.Title = "Error interno del servidor";
                 problemDetails.Status = StatusCodes.Status500InternalServerError;
-                problemDetails.Detail = "Ha ocurrido un error inesperado. Por favor, contacte a soporte técnico.";
+                problemDetails.Detail = _env.IsDevelopment()
+                    ? $"{exception.Message} ({exception.GetType().Name})"
+                    : "Ha ocurrido un error inesperado. Por favor, contacte a soporte técnico.";
             }
 
             // 4. Escribimos la respuesta en formato JSON
             await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
 
-            return true; // Indicamos que la excepción ya fue manejada y no debe propagarse más
+            return true;
         }
     }
 }

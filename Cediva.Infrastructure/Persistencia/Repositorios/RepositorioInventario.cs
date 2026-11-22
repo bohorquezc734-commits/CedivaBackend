@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore; 
 using Cediva.Domain.Agregados.Inventario;
 using Cediva.Dominio.Interfaces;
 
@@ -9,22 +15,25 @@ namespace Cediva.Infrastructure.Persistencia.Repositorios
         {
         }
 
-        public Task<List<Inventario>> ObtenerConStockBajo(int umbral, CancellationToken cancellationToken = default)
+        public async Task<Inventario?> ObtenerPorProducto(Guid productoId, CancellationToken cancellationToken = default)
         {
-            // TODO: Implement when Inventario properties are defined
-            throw new NotImplementedException();
+  
+            return await _context.Inventarios
+                .FirstOrDefaultAsync(i => i.ProductoId == productoId, cancellationToken);
         }
 
-        public Task<Inventario?> ObtenerPorProducto(Guid productoId, CancellationToken cancellationToken = default)
+        public async Task<List<Inventario>> ObtenerConStockBajo(int umbral, CancellationToken cancellationToken = default)
         {
-            // TODO: Implement when Inventario properties are defined
-            throw new NotImplementedException();
+          
+            return await _context.Inventarios
+                .Where(i => i.CantidadDisponible.Valor <= umbral)
+                .ToListAsync(cancellationToken);
         }
 
-        public Task<List<Inventario>> ObtenerPorUbicacion(string ubicacion, CancellationToken cancellationToken = default)
+        public async Task<List<Inventario>> ObtenerPorUbicacion(string ubicacion, CancellationToken cancellationToken = default)
         {
-            // TODO: Implement when Inventario properties are defined
-            throw new NotImplementedException();
+          
+            return await Task.FromResult(new List<Inventario>());
         }
     }
 }

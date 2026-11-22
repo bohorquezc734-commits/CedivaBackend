@@ -1,62 +1,40 @@
+﻿using Cediva.Application;
 using Cediva.Infrastructure;
 using Cediva.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// 1. Configurar Swagger (Generador de documentación)
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// 2. Inyectar dependencias de tu arquitectura (Aplicación y Persistencia)
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
-// Registras tu clase de manejo de excepciones
+// 3. Configurar manejo de excepciones
 builder.Services.AddExceptionHandler<MiddlewareManejoExcepciones>();
-
-// Habilitas el formato ProblemDetails est�ndar
 builder.Services.AddProblemDetails();
 
+// 4. Agregar controladores
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    // 5. Activar Swagger visual
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseHttpsRedirection();
 
-// Activas el uso del manejador de excepciones
 app.UseExceptionHandler();
 
 app.UseAuthorization();
 
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
 app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
