@@ -1,4 +1,5 @@
 ﻿using Cediva.Application.Caracteristicas.Productos.Comandos.CrearProducto;
+using Cediva.Application.Caracteristicas.Productos.Consultas.ConsultarProductos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +26,15 @@ namespace Cediva.API.Controladores
                 Mensaje = "Producto procesado exitosamente",
                 Data = resultado
             });
+
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> ConsultarProductos()
+        {
+   
+            var productos = await _mediator.Send(new ConsultarProductosQuery());
+            return Ok(productos);
         }
     }
 }

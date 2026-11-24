@@ -21,5 +21,21 @@ namespace Cediva.API.Controladores
             var inventarioId = await _mediator.Send(comando);
             return Ok(new { Mensaje = "Movimiento registrado exitosamente", InventarioId = inventarioId });
         }
+        [HttpGet]
+        public async Task<IActionResult> ObtenerInventarios([FromServices] Cediva.Dominio.Interfaces.IRepositorioInventario repositorio)
+        {
+            
+            var inventarios = await repositorio.ObtenerTodos();
+
+            var resultado = inventarios.Select(i => new
+            {
+                ProductoId = i.ProductoId,
+                Stock = i.CantidadDisponible.Valor
+            });
+
+            return Ok(resultado);
+        }
     }
+
+
 }

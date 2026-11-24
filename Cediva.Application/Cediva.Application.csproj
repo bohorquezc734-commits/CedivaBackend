@@ -10,7 +10,6 @@
     <Folder Include="Caracteristicas\Inventarios\Consultas\ConsultarInventarios\" />
     <Folder Include="Caracteristicas\Inventarios\Consultas\ConsultarDisponibilidad\" />
     <Folder Include="Caracteristicas\Inventarios\Consultas\ConsultarMovimientos\" />
-    <Folder Include="Caracteristicas\Productos\Consultas\ConsultarProductos\" />
     <Folder Include="Caracteristicas\Productos\Consultas\ConsultarProductoPorCodigo\" />
   </ItemGroup>
 

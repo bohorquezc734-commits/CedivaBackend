@@ -1,12 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Cediva.Application.DTOs
+namespace Cediva.Application.DTOs 
 {
-    internal class ProductoDto
+    
+    public class ProductoDto
     {
+        public Guid Id { get; set; }
+        public string Nombre { get; set; } = string.Empty;
+        public string ? Descripcion { get; set; } = string.Empty;
+        public decimal PrecioUnitario { get; set; }
+        public string CodigoBarras { get; set; } = string.Empty;
+
+       
     }
 }
