@@ -28,10 +28,17 @@ namespace Cediva.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ClienteNombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Estado")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("FechaDespacho")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -44,7 +51,7 @@ namespace Cediva.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("DespachoId")
+                    b.Property<Guid?>("DespachoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProductoId")
@@ -275,8 +282,7 @@ namespace Cediva.Infrastructure.Migrations
                     b.HasOne("Cediva.Domain.Agregados.Despacho.Despacho", null)
                         .WithMany("Items")
                         .HasForeignKey("DespachoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.OwnsOne("Cediva.Dominio.ObjetosValor.Cantidad", "Cantidad", b1 =>
                         {

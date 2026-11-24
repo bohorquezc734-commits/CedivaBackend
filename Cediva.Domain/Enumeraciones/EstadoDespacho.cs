@@ -8,6 +8,7 @@ namespace Cediva.Domain.Enumeraciones
         Comfirmado = 2,
         Encamino = 3,
         Entregado = 4,
-        Cancelado = 5
+        Cancelado = 5,
+        Pendiente = 6
     }
 }
