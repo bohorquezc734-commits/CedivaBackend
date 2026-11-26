@@ -10,4 +10,5 @@ public interface IRepositorioDespacho : IRepositorio<Despacho>
     Task<List<Despacho>> ObtenerPorCliente(string clienteId, CancellationToken cancellationToken = default);
     Task<List<Despacho>> ObtenerPorRangoFechas(DateTime fechaInicio, DateTime fechaFin, CancellationToken cancellationToken = default);
     Task<Despacho?> ObtenerPorNumeroGuia(string numeroGuia, CancellationToken cancellationToken = default);
+    Task<List<Despacho>> ObtenerTodosConItems(CancellationToken cancellationToken = default);
 }

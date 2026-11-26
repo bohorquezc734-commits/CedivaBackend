@@ -22,6 +22,27 @@ namespace Cediva.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Cediva.Domain.Agregados.Cliente.Cliente", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NIT")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clientes", (string)null);
+                });
+
             modelBuilder.Entity("Cediva.Domain.Agregados.Despacho.Despacho", b =>
                 {
                     b.Property<Guid>("Id")
@@ -100,6 +121,143 @@ namespace Cediva.Infrastructure.Migrations
                     b.HasIndex("InventarioId");
 
                     b.ToTable("Movimientos", (string)null);
+                });
+
+            modelBuilder.Entity("Cediva.Domain.Agregados.Muelle.LineaOrdenFacturaMuelle", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CantidadPedida")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CantidadPistoleada")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodigoBarras")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("OrdenFacturaMuelleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrdenFacturaMuelleId");
+
+                    b.ToTable("LineasOrdenesFacturasMuelle", (string)null);
+                });
+
+            modelBuilder.Entity("Cediva.Domain.Agregados.Muelle.OrdenFacturaMuelle", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AuditadoPor")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ClienteNit")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ClienteNombre")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Conductor")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("DespachadoPor")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HoraAuditoria")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("HoraDespacho")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Muelle")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NumeroFactura")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PlacaVehiculo")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Transportadora")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NumeroFactura")
+                        .IsUnique();
+
+                    b.ToTable("OrdenesFacturasMuelle", (string)null);
+                });
+
+            modelBuilder.Entity("Cediva.Domain.Agregados.Usuario.Usuario", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NombreCompleto")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Rol")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Usuarios", (string)null);
                 });
 
             modelBuilder.Entity("Cediva.Dominio.Agregados.Producto.Categoria", b =>
@@ -308,8 +466,7 @@ namespace Cediva.Infrastructure.Migrations
                                 .HasForeignKey("ItemDespachoId");
                         });
 
-                    b.Navigation("Cantidad")
-                        .IsRequired();
+                    b.Navigation("Cantidad");
                 });
 
             modelBuilder.Entity("Cediva.Domain.Agregados.Inventario.Inventario", b =>
@@ -378,6 +535,15 @@ namespace Cediva.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Cediva.Domain.Agregados.Muelle.LineaOrdenFacturaMuelle", b =>
+                {
+                    b.HasOne("Cediva.Domain.Agregados.Muelle.OrdenFacturaMuelle", null)
+                        .WithMany("Lineas")
+                        .HasForeignKey("OrdenFacturaMuelleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Cediva.Dominio.Agregados.Producto.Categoria", b =>
                 {
                     b.HasOne("Cediva.Dominio.Agregados.Producto.Categoria", "CategoriaPadre")
@@ -412,6 +578,11 @@ namespace Cediva.Infrastructure.Migrations
             modelBuilder.Entity("Cediva.Domain.Agregados.Inventario.Inventario", b =>
                 {
                     b.Navigation("Movimientos");
+                });
+
+            modelBuilder.Entity("Cediva.Domain.Agregados.Muelle.OrdenFacturaMuelle", b =>
+                {
+                    b.Navigation("Lineas");
                 });
 #pragma warning restore 612, 618
         }

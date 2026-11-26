@@ -1,6 +1,9 @@
 using System.Reflection;
+using Cediva.Domain.Agregados.Cliente;
 using Cediva.Domain.Agregados.Despacho;
 using Cediva.Domain.Agregados.Inventario;
+using Cediva.Domain.Agregados.Muelle;
+using Cediva.Domain.Agregados.Usuario;
 using Cediva.Dominio.Agregados.Producto;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +23,10 @@ namespace Cediva.Infrastructure.Persistencia
         public DbSet<Despacho> Despachos { get; set; } = null!;
         public DbSet<ItemDespacho> ItemsDespacho { get; set; } = null!;
         public DbSet<Movimiento> Movimientos { get; set; } = null!;
+        public DbSet<Cliente> Clientes { get; set; } = null!;
+        public DbSet<Usuario> Usuarios { get; set; } = null!;
+        public DbSet<OrdenFacturaMuelle> OrdenesFacturasMuelle { get; set; } = null!;
+        public DbSet<LineaOrdenFacturaMuelle> LineasOrdenesFacturasMuelle { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
