@@ -5,7 +5,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Caracteristicas\Despachos\Consultas\ConsultarDespachos\" />
     <Folder Include="Caracteristicas\Despachos\Consultas\ConsultarGuias\" />
     <Folder Include="Caracteristicas\Inventarios\Consultas\ConsultarInventarios\" />
     <Folder Include="Caracteristicas\Inventarios\Consultas\ConsultarDisponibilidad\" />
