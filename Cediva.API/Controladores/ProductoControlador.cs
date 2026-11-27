@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Cediva.Application.Caracteristicas.Productos.Comandos.CrearProducto;
 using Cediva.Application.Caracteristicas.Productos.Consultas.ConsultarProductos;
+using Cediva.Domain.Constantes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace Cediva.API.Controladores
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = RolesSistema.SoloAdministrador)]
         public async Task<IActionResult> CrearProducto([FromBody] CrearProductoComando comando)
         {
             var resultado = await _mediator.Send(comando);
@@ -33,7 +34,7 @@ namespace Cediva.API.Controladores
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrador,Supervisor,AuditorBodega")]
+        [Authorize(Roles = RolesSistema.MuelleOperativo)]
         public async Task<IActionResult> ConsultarProductos()
         {
             var productos = await _mediator.Send(new ConsultarProductosQuery());

@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Cediva.Domain.Constantes;
 using Cediva.Domain.Excepciones;
 using Cediva.Domain.Interfaces;
 using MediatR;
@@ -33,7 +34,7 @@ namespace Cediva.Application.Caracteristicas.Muelle.Comandos
 
             orden.Despachar(
                 request.DespachadoPor,
-                request.HoraDespacho ?? DateTime.Now.ToString("HH:mm:ss"),
+                request.HoraDespacho ?? DateTime.Now.ToString(FormatosLogistica.HoraEstandar),
                 request.Transportadora,
                 request.PlacaVehiculo,
                 request.Conductor

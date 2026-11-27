@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Cediva.Application.Caracteristicas.Despachos.Comandos;
 using Cediva.Application.Caracteristicas.Despachos.Consultas;
+using Cediva.Domain.Constantes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace Cediva.API.Controladores
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrador,Supervisor")]
+        [Authorize(Roles = RolesSistema.AdministracionYSupervision)]
         public async Task<IActionResult> CrearDespacho([FromBody] CrearDespachoComando comando)
         {
             var despachoId = await _mediator.Send(comando);
@@ -28,7 +29,7 @@ namespace Cediva.API.Controladores
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrador,Supervisor")]
+        [Authorize(Roles = RolesSistema.AdministracionYSupervision)]
         public async Task<IActionResult> ObtenerHistorial()
         {
             var despachos = await _mediator.Send(new ObtenerDespachosQuery());

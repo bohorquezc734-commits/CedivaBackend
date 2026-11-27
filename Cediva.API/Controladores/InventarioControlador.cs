@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Cediva.Application.Caracteristicas.Inventarios.Comandos.RegistrarMovimientos;
+using Cediva.Domain.Constantes;
 using Cediva.Dominio.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -21,7 +22,7 @@ namespace Cediva.API.Controladores
         }
 
         [HttpPost("movimiento")]
-        [Authorize(Roles = "Administrador,Supervisor,AuditorBodega")]
+        [Authorize(Roles = RolesSistema.MuelleOperativo)]
         public async Task<IActionResult> RegistrarMovimiento([FromBody] RegistrarMovimientoComando comando)
         {
             var inventarioId = await _mediator.Send(comando);
@@ -29,7 +30,7 @@ namespace Cediva.API.Controladores
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrador,Supervisor,AuditorBodega")]
+        [Authorize(Roles = RolesSistema.MuelleOperativo)]
         public async Task<IActionResult> ObtenerInventarios([FromServices] IRepositorioInventario repositorio)
         {
             var inventarios = await repositorio.ObtenerTodos();

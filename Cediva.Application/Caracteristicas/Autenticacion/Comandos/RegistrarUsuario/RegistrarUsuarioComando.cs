@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Cediva.Application.Comunes.Interfaces;
 using Cediva.Domain.Agregados.Usuario;
+using Cediva.Domain.Constantes;
 using Cediva.Domain.Enumeraciones;
 using Cediva.Domain.Excepciones;
 using Cediva.Domain.Interfaces;
@@ -30,8 +31,8 @@ namespace Cediva.Application.Caracteristicas.Autenticacion.Comandos.RegistrarUsu
 
         public async Task<Guid> Handle(RegistrarUsuarioComando request, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrWhiteSpace(request.Password) || request.Password.Length < 6)
-                throw new ReglaDeNegocioException("La contraseña debe tener al menos 6 caracteres.");
+            if (string.IsNullOrWhiteSpace(request.Password) || request.Password.Length < LimitesDominio.Usuario.LongitudMinimaPassword)
+                throw new ReglaDeNegocioException($"La contraseña debe tener al menos {LimitesDominio.Usuario.LongitudMinimaPassword} caracteres.");
 
             var existe = await _usuarioRepository.ExisteEmail(request.Email, cancellationToken);
             if (existe)

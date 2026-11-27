@@ -1,3 +1,4 @@
+using Cediva.Domain.Constantes;
 using FluentValidation;
 
 namespace Cediva.Application.Caracteristicas.Productos.Comandos.CrearProducto
@@ -8,8 +9,8 @@ namespace Cediva.Application.Caracteristicas.Productos.Comandos.CrearProducto
         {
             RuleFor(x => x.Nombre)
                 .NotEmpty().WithMessage("El nombre del producto es obligatorio.")
-                .MinimumLength(3).WithMessage("El nombre debe tener al menos 3 caracteres.")
-                .MaximumLength(100).WithMessage("El nombre no puede exceder los 100 caracteres.");
+                .MinimumLength(LimitesDominio.Catalogo.LongitudMinimaNombreProducto).WithMessage($"El nombre debe tener al menos {LimitesDominio.Catalogo.LongitudMinimaNombreProducto} caracteres.")
+                .MaximumLength(LimitesDominio.Catalogo.LongitudMaximaNombreProducto).WithMessage($"El nombre no puede exceder los {LimitesDominio.Catalogo.LongitudMaximaNombreProducto} caracteres.");
 
             RuleFor(x => x.CodigoBarras)
                 .NotEmpty().WithMessage("El código de barras es obligatorio.");

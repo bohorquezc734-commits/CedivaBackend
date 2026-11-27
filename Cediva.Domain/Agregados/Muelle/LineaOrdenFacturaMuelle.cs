@@ -9,9 +9,10 @@ namespace Cediva.Domain.Agregados.Muelle
         public Guid OrdenFacturaMuelleId { get; private set; }
         public string CodigoBarras { get; private set; } = string.Empty;
         public int CantidadPedida { get; private set; }
+        public int CantidadAlistada { get; private set; }
         public int CantidadPistoleada { get; private set; }
 
-        private LineaOrdenFacturaMuelle() { } // EF Core
+        private LineaOrdenFacturaMuelle() { } // Requerido por EF Core
 
         public LineaOrdenFacturaMuelle(Guid id, Guid ordenFacturaMuelleId, string codigoBarras, int cantidadPedida)
         {
@@ -25,7 +26,16 @@ namespace Cediva.Domain.Agregados.Muelle
             OrdenFacturaMuelleId = ordenFacturaMuelleId;
             CodigoBarras = codigoBarras.Trim();
             CantidadPedida = cantidadPedida;
+            CantidadAlistada = 0;
             CantidadPistoleada = 0;
+        }
+
+        public void ActualizarAlistado(int cantidadAlistada)
+        {
+            if (cantidadAlistada < 0)
+                throw new ReglaDeNegocioException("La cantidad alistada no puede ser negativa.");
+
+            CantidadAlistada = cantidadAlistada;
         }
 
         public void ActualizarPistoleado(int cantidadPistoleada)

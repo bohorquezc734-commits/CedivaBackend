@@ -129,6 +129,9 @@ namespace Cediva.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("CantidadAlistada")
+                        .HasColumnType("int");
+
                     b.Property<int>("CantidadPedida")
                         .HasColumnType("int");
 
@@ -155,6 +158,10 @@ namespace Cediva.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AlistadoPor")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AuditadoPor")
                         .HasMaxLength(100)
@@ -185,6 +192,10 @@ namespace Cediva.Infrastructure.Migrations
 
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("HoraAlistamiento")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("HoraAuditoria")
                         .HasMaxLength(20)

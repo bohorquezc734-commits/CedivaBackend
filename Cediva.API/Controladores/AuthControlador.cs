@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Cediva.Application.Caracteristicas.Autenticacion.Comandos.Login;
 using Cediva.Application.Caracteristicas.Autenticacion.Comandos.RegistrarUsuario;
 using Cediva.Application.Caracteristicas.Autenticacion.Consultas.ObtenerUsuarios;
+using Cediva.Domain.Constantes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,7 @@ namespace Cediva.API.Controladores
         }
 
         [HttpPost("registrar")]
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = RolesSistema.SoloAdministrador)]
         public async Task<IActionResult> Registrar([FromBody] RegistrarUsuarioComando comando)
         {
             var usuarioId = await _mediator.Send(comando);
@@ -40,7 +41,7 @@ namespace Cediva.API.Controladores
         }
 
         [HttpGet("usuarios")]
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = RolesSistema.SoloAdministrador)]
         public async Task<IActionResult> ObtenerUsuarios()
         {
             var usuarios = await _mediator.Send(new ObtenerUsuariosQuery());

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cediva.Application.Caracteristicas.Muelle.DTOs;
+using Cediva.Domain.Constantes;
 using Cediva.Domain.Excepciones;
 using Cediva.Domain.Interfaces;
 using MediatR;
@@ -35,7 +36,7 @@ namespace Cediva.Application.Caracteristicas.Muelle.Comandos
             var pistoleadas = (request.LineasPistoleadas ?? new List<AuditarLineaDto>())
                 .Select(l => (l.CodigoBarras, l.CantidadPistoleada));
 
-            orden.Auditar(request.AuditadoPor, request.HoraAuditoria ?? DateTime.Now.ToString("HH:mm:ss"), pistoleadas);
+            orden.Auditar(request.AuditadoPor, request.HoraAuditoria ?? DateTime.Now.ToString(FormatosLogistica.HoraEstandar), pistoleadas);
 
             await _repository.Actualizar(orden, cancellationToken);
             return true;

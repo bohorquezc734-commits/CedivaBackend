@@ -1,4 +1,5 @@
-﻿
+
+using Cediva.Domain.Constantes;
 using Cediva.Dominio.Excepciones;
 using Cediva.Dominio.Interfaces;
 
@@ -39,11 +40,11 @@ public class Categoria : IAggregateRoot
         if (string.IsNullOrWhiteSpace(nombre))
             throw new ExcepcionDominio("El nombre de la categoría no puede estar vacío");
 
-        if (nombre.Length < 3)
-            throw new ExcepcionDominio("El nombre de la categoría debe tener al menos 3 caracteres");
+        if (nombre.Length < LimitesDominio.Catalogo.LongitudMinimaNombreCategoria)
+            throw new ExcepcionDominio($"El nombre de la categoría debe tener al menos {LimitesDominio.Catalogo.LongitudMinimaNombreCategoria} caracteres");
 
-        if (nombre.Length > 50)
-            throw new ExcepcionDominio("El nombre de la categoría no puede tener más de 50 caracteres");
+        if (nombre.Length > LimitesDominio.Catalogo.LongitudMaximaNombreCategoria)
+            throw new ExcepcionDominio($"El nombre de la categoría no puede tener más de {LimitesDominio.Catalogo.LongitudMaximaNombreCategoria} caracteres");
 
         Nombre = nombre.Trim();
     }

@@ -19,6 +19,9 @@ namespace Cediva.Infrastructure.Persistencia.Configuraciones
             builder.Property(l => l.CantidadPedida)
                 .IsRequired();
 
+            builder.Property(l => l.CantidadAlistada)
+                .IsRequired();
+
             builder.Property(l => l.CantidadPistoleada)
                 .IsRequired();
         }
