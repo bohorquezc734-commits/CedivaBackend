@@ -7,6 +7,7 @@ namespace Cediva.Application.Caracteristicas.Muelle.DTOs
         Guid Id,
         string CodigoBarras,
         int CantidadPedida,
+        int CantidadAlistada,
         int CantidadPistoleada
     );
 
@@ -18,6 +19,8 @@ namespace Cediva.Application.Caracteristicas.Muelle.DTOs
         string Muelle,
         string Estado,
         DateTime FechaCreacion,
+        string? AlistadoPor,
+        string? HoraAlistamiento,
         string? AuditadoPor,
         string? HoraAuditoria,
         string? DespachadoPor,
@@ -31,6 +34,11 @@ namespace Cediva.Application.Caracteristicas.Muelle.DTOs
     public record CrearLineaOrdenDto(
         string CodigoBarras,
         int CantidadPedida
+    );
+
+    public record AlistarLineaDto(
+        string CodigoBarras,
+        int CantidadAlistada
     );
 
     public record AuditarLineaDto(

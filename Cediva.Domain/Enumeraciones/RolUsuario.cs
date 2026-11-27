@@ -4,6 +4,7 @@ namespace Cediva.Domain.Enumeraciones
     {
         Administrador = 1,
         Supervisor = 2,
-        AuditorBodega = 3
+        AuditorBodega = 3,
+        AuxiliarLogistico = 4
     }
 }

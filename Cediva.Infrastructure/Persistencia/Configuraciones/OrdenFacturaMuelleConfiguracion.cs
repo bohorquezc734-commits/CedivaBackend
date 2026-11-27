@@ -38,6 +38,12 @@ namespace Cediva.Infrastructure.Persistencia.Configuraciones
             builder.Property(o => o.FechaCreacion)
                 .IsRequired();
 
+            builder.Property(o => o.AlistadoPor)
+                .HasMaxLength(100);
+
+            builder.Property(o => o.HoraAlistamiento)
+                .HasMaxLength(20);
+
             builder.Property(o => o.AuditadoPor)
                 .HasMaxLength(100);
 

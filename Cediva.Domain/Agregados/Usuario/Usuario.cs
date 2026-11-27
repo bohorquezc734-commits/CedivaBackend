@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using Cediva.Domain.Constantes;
 using Cediva.Domain.Enumeraciones;
 using Cediva.Domain.Excepciones;
 using Cediva.Dominio.Interfaces;
@@ -55,8 +56,8 @@ namespace Cediva.Domain.Agregados.Usuario
             if (string.IsNullOrWhiteSpace(nombreCompleto))
                 throw new ReglaDeNegocioException("El nombre completo del usuario es obligatorio.");
 
-            if (nombreCompleto.Trim().Length < 3)
-                throw new ReglaDeNegocioException("El nombre completo debe tener al menos 3 caracteres.");
+            if (nombreCompleto.Trim().Length < LimitesDominio.Usuario.LongitudMinimaNombre)
+                throw new ReglaDeNegocioException($"El nombre completo debe tener al menos {LimitesDominio.Usuario.LongitudMinimaNombre} caracteres.");
 
             NombreCompleto = nombreCompleto.Trim();
         }

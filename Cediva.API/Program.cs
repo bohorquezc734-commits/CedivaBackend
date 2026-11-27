@@ -1,4 +1,5 @@
 using System.Text;
+using Cediva.API.Constantes;
 using Cediva.API.Middleware;
 using Cediva.Application;
 using Cediva.Infrastructure;
@@ -14,10 +15,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo
+    c.SwaggerDoc(ConfiguracionApiConstantes.VersionSwagger, new OpenApiInfo
     {
-        Title = "CEDIVA API - Logística y Bodega",
-        Version = "v1",
+        Title = ConfiguracionApiConstantes.TituloSwagger,
+        Version = ConfiguracionApiConstantes.VersionSwagger,
         Description = "API REST de CEDIVA con autenticación basada en JWT y control de acceso por roles (RBAC)."
     });
 
@@ -86,13 +87,17 @@ builder.Services.AddAuthorization();
 builder.Services.AddExceptionHandler<MiddlewareManejoExcepciones>();
 builder.Services.AddProblemDetails();
 
-// 5. Agregar controladores
-builder.Services.AddControllers();
+// 5. Agregar controladores con soporte para serialización de Enums (Texto y Numérico)
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+    });
 
 // 6. Política CORS para Frontend (React / Vite en localhost, red local o túneles móviles)
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("PermitirReact", policy =>
+    options.AddPolicy(ConfiguracionApiConstantes.PoliticaCorsReact, policy =>
     {
         policy.SetIsOriginAllowed(_ => true)
               .AllowAnyHeader()
@@ -107,7 +112,7 @@ var app = builder.Build();
 await DataSeeder.InicializarAsync(app.Services);
 
 // Middlewares del pipeline
-app.UseCors("PermitirReact");
+app.UseCors(ConfiguracionApiConstantes.PoliticaCorsReact);
 
 if (app.Environment.IsDevelopment())
 {

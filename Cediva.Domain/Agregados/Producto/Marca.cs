@@ -1,4 +1,5 @@
-﻿
+
+using Cediva.Domain.Constantes;
 using Cediva.Dominio.Excepciones;
 using Cediva.Dominio.Interfaces;
 
@@ -37,11 +38,11 @@ public class Marca : IAggregateRoot
         if (string.IsNullOrWhiteSpace(nombre))
             throw new ExcepcionDominio("El nombre de la marca no puede estar vacío");
 
-        if (nombre.Length < 2)
-            throw new ExcepcionDominio("El nombre de la marca debe tener al menos 2 caracteres");
+        if (nombre.Length < LimitesDominio.Catalogo.LongitudMinimaNombreMarca)
+            throw new ExcepcionDominio($"El nombre de la marca debe tener al menos {LimitesDominio.Catalogo.LongitudMinimaNombreMarca} caracteres");
 
-        if (nombre.Length > 50)
-            throw new ExcepcionDominio("El nombre de la marca no puede tener más de 50 caracteres");
+        if (nombre.Length > LimitesDominio.Catalogo.LongitudMaximaNombreMarca)
+            throw new ExcepcionDominio($"El nombre de la marca no puede tener más de {LimitesDominio.Catalogo.LongitudMaximaNombreMarca} caracteres");
 
         Nombre = nombre.Trim();
     }

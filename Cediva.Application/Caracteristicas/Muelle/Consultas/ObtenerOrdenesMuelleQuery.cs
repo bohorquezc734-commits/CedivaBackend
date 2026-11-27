@@ -33,6 +33,8 @@ namespace Cediva.Application.Caracteristicas.Muelle.Consultas
                     o.Muelle,
                     o.Estado,
                     o.FechaCreacion,
+                    o.AlistadoPor,
+                    o.HoraAlistamiento,
                     o.AuditadoPor,
                     o.HoraAuditoria,
                     o.DespachadoPor,
@@ -44,6 +46,7 @@ namespace Cediva.Application.Caracteristicas.Muelle.Consultas
                         l.Id,
                         l.CodigoBarras,
                         l.CantidadPedida,
+                        l.CantidadAlistada,
                         l.CantidadPistoleada
                     )).ToList()
                 )).ToList();

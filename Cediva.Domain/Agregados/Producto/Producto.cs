@@ -1,4 +1,5 @@
-﻿using Cediva.Domain.Enumeraciones;
+using Cediva.Domain.Constantes;
+using Cediva.Domain.Enumeraciones;
 
 using Cediva.Dominio.Excepciones;
 using Cediva.Dominio.Interfaces;
@@ -76,11 +77,11 @@ public class Producto : IAggregateRoot
         if (string.IsNullOrWhiteSpace(nombre))
             throw new ExcepcionDominio("El nombre del producto no puede estar vacío");
 
-        if (nombre.Length < 3)
-            throw new ExcepcionDominio("El nombre del producto debe tener al menos 3 caracteres");
+        if (nombre.Length < LimitesDominio.Catalogo.LongitudMinimaNombreProducto)
+            throw new ExcepcionDominio($"El nombre del producto debe tener al menos {LimitesDominio.Catalogo.LongitudMinimaNombreProducto} caracteres");
 
-        if (nombre.Length > 100)
-            throw new ExcepcionDominio("El nombre del producto no puede tener más de 100 caracteres");
+        if (nombre.Length > LimitesDominio.Catalogo.LongitudMaximaNombreProducto)
+            throw new ExcepcionDominio($"El nombre del producto no puede tener más de {LimitesDominio.Catalogo.LongitudMaximaNombreProducto} caracteres");
 
         Nombre = nombre.Trim();
     }

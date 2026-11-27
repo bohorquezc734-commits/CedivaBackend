@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Cediva.Application.Caracteristicas.Clientes.Comandos;
 using Cediva.Application.Caracteristicas.Clientes.Consultas;
+using Cediva.Domain.Constantes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace Cediva.API.Controladores
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrador,Supervisor")]
+        [Authorize(Roles = RolesSistema.AdministracionYSupervision)]
         public async Task<IActionResult> Crear([FromBody] CrearClienteComando comando)
         {
             var id = await _mediator.Send(comando);
@@ -28,7 +29,7 @@ namespace Cediva.API.Controladores
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrador,Supervisor")]
+        [Authorize(Roles = RolesSistema.AdministracionYSupervision)]
         public async Task<IActionResult> ConsultarClientes()
         {
             var clientes = await _mediator.Send(new ConsultarClientesQuery());

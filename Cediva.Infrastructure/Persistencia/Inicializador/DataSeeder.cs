@@ -18,36 +18,64 @@ namespace Cediva.Infrastructure.Persistencia.Inicializador
 
             try
             {
-                // Verificamos conexión y si la tabla Usuarios existe y está vacía
-                if (await context.Database.CanConnectAsync() && !await context.Usuarios.AnyAsync())
+                // Verificamos conexión con la base de datos
+                if (await context.Database.CanConnectAsync())
                 {
-                    var usuariosIniciales = new[]
+                    // 1. Sembrado si la tabla Usuarios está completamente vacía
+                    if (!await context.Usuarios.AnyAsync())
                     {
-                        new Usuario(
-                            Guid.NewGuid(),
-                            "Administrador General",
-                            "admin@cediva.com",
-                            passwordHasher.Hash("Admin123*"),
-                            RolUsuario.Administrador
-                        ),
-                        new Usuario(
-                            Guid.NewGuid(),
-                            "Supervisor de Bodega",
-                            "supervisor@cediva.com",
-                            passwordHasher.Hash("Super123*"),
-                            RolUsuario.Supervisor
-                        ),
-                        new Usuario(
-                            Guid.NewGuid(),
-                            "Auditor y Operador RF",
-                            "auditor@cediva.com",
-                            passwordHasher.Hash("Auditor123*"),
-                            RolUsuario.AuditorBodega
-                        )
-                    };
+                        var usuariosIniciales = new[]
+                        {
+                            new Usuario(
+                                Guid.NewGuid(),
+                                "Administrador General",
+                                "admin@cediva.com",
+                                passwordHasher.Hash("Admin123*"),
+                                RolUsuario.Administrador
+                            ),
+                            new Usuario(
+                                Guid.NewGuid(),
+                                "Supervisor de Bodega",
+                                "supervisor@cediva.com",
+                                passwordHasher.Hash("Super123*"),
+                                RolUsuario.Supervisor
+                            ),
+                            new Usuario(
+                                Guid.NewGuid(),
+                                "Auditor y Operador RF",
+                                "auditor@cediva.com",
+                                passwordHasher.Hash("Auditor123*"),
+                                RolUsuario.AuditorBodega
+                            ),
+                            new Usuario(
+                                Guid.NewGuid(),
+                                "Auxiliar Logístico y Picking",
+                                "auxiliar@cediva.com",
+                                passwordHasher.Hash("Auxiliar123*"),
+                                RolUsuario.AuxiliarLogistico
+                            )
+                        };
 
-                    await context.Usuarios.AddRangeAsync(usuariosIniciales);
-                    await context.SaveChangesAsync();
+                        await context.Usuarios.AddRangeAsync(usuariosIniciales);
+                        await context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        // 2. Si ya existen usuarios pero aún no se ha sembrado el usuario AuxiliarLogistico
+                        if (!await context.Usuarios.AnyAsync(u => u.Email == "auxiliar@cediva.com"))
+                        {
+                            var auxiliar = new Usuario(
+                                Guid.NewGuid(),
+                                "Auxiliar Logístico y Picking",
+                                "auxiliar@cediva.com",
+                                passwordHasher.Hash("Auxiliar123*"),
+                                RolUsuario.AuxiliarLogistico
+                            );
+
+                            await context.Usuarios.AddAsync(auxiliar);
+                            await context.SaveChangesAsync();
+                        }
+                    }
                 }
             }
             catch
